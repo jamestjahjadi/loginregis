@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,td,th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+        table{
+            margin: 0 auto;
+            text-align: center;   
+        }
+        h1,h2,h3{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <table>
+            <tr>
+                <td>
+                    <h1>Input Manusia</h1>
+                    Nama: <input type="text" id="inputnama"> <br><br>
+                    Usia: <input type="number"  id="inputusia"><br><br>
+                    Gender: Pria <input type="radio" id="sex"> &nbsp; Wanita <input type="radio" id="sex"><br><br>
+                    Pekerjaan: <input type="text" id="pekerjaan"><br><br>
+                    <button onclick="submitclick()">submit</button>
+                </td>
+            </tr>
+        </table>
+        <br><br>
+        <button onclick="sort('nama')">Nama</button>
+        <button onclick="sort('usia')">Usia</button>
+        <button onclick="sort('gender')">Gender</button>
+        <button onclick="sort('Pekerjaan')">Pekerjaan</button>
+        <br><br>
+        <table>
+            <thead>
+                <tr>
+                    <td>No.</td>
+                    <td>Nama</td>
+                    <td>Usia</td>
+                    <td>Gender</td>
+                    <td>Pekerjaan</td>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+               
+            </tbody>
+        </table>
+    </center>
+</body>
+<script>
+    class Manusia{
+        constructor(nama,usia,gender,pekerjaan){
+            this.nama=nama,
+            this.usia=usia,
+            this.gender=gender,
+            this.pekerjaan=pekerjaan
+        }
+    }
+var datamanusia=[
+    new Manusia('james',22,'pria','students'),
+    new Manusia('putri',20,'wanita','murid')
+
+]
+
+
+
+const sort=(params)=>{
+   for(i=datamanusia.length-1;i>0;i--){
+       for(var j=0;j<i;j++){
+           if(datamanusia[j][params]>datamanusia[j+1][params]){
+               var temp=datamanusia[j]
+               datamanusia[j]=datamanusia[j+1]
+               datamanusia[j+1]=temp
+           }
+       }
+   }
+   printdatamanusia()
+}
+
+
+const printdatamanusia=()=>{
+    var printdata=datamanusia.map((val,index)=>{
+        return (
+            ` <tr>
+                    <td>${index+1}</td>
+                    <td>${val.nama}</td>
+                    <td>${val.usia}</td>
+                    <td>${val.gender}</td>
+                    <td>${val.pekerjaan}</td>
+                </tr>`
+        )
+    })
+    document.getElementById('tbody').innerHTML=printdata.join('')
+}
+printdatamanusia()
+
+const submitclick=()=>{
+    var newnama=document.getElementById('inputnama').value
+    var newusia=document.getElementById('inputusia').value
+    var newgender=document.getElementById('sex').value
+    var newpekerjaan=document.getElementById('pekerjaan').value
+
+    newgender.checked==0?newgender=='pria':newgender=='wanita'
+
+    datamanusia.push(new Manusia(newnama,newusia,newgender,newpekerjaan))
+    printdatamanusia()
+}
+</script>
+</html>
